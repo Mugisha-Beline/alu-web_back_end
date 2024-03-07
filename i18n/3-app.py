@@ -20,11 +20,9 @@ Note: This script assumes the presence of a 'templates' folder containing
 from flask_babel import Babel, _
 from flask import Flask, render_template, request, flash
 
-
 # Initialize Flask app and Flask-Babel extension
 app = Flask(__name__, template_folder='templates')
 babel = Babel(app)
-
 
 # Configuration class for Flask-Babel
 class Config(object):
@@ -33,10 +31,8 @@ class Config(object):
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
-
 # Apply the configuration to the app
 app.config.from_object(Config)
-
 
 @app.route('/', methods=['GET'], strict_slashes=False)
 def hello_world() -> str:
@@ -51,7 +47,6 @@ def hello_world() -> str:
     """
     return render_template("3-index.html")
 
-
 @babel.localeselector
 def get_locale() -> str:
     """Select a language translation to use for that request.
@@ -64,7 +59,7 @@ def get_locale() -> str:
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
-
 if __name__ == "__main__":
     app.run()
+
 
