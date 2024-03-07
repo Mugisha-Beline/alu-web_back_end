@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-""" Module for trying out Babel i18n and 
-the function that marks the string that need to be translated"""
+""" Module for trying out Babel i18n """
 from flask_babel import Babel, _
 from flask import Flask, render_template, request, flash
 
@@ -9,7 +8,7 @@ babel = Babel(app)
 
 
 class Config(object):
-    """ Configuration Class for Babel it does all configurations"""
+    """ Configuration Class for Babel """
 
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
@@ -33,4 +32,3 @@ def get_locale() -> str:
 
 if __name__ == "__main__":
     app.run()
-
