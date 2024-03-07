@@ -8,7 +8,7 @@ babel = Babel(app)
 
 
 class Config(object):
-    """ Configuration Class for Babel """
+    """ Configuration Class for Babel it does all configurations"""
 
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
@@ -32,3 +32,4 @@ def get_locale() -> str:
 
 if __name__ == "__main__":
     app.run()
+
