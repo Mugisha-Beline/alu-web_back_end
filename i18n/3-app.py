@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-""" Module for trying out Babel i18n """
+""" 
+Module for trying out Babel i18n 
+
+This module demonstrates the implementation of internationalization (i18n) 
+and localization in a Flask web application using the Flask-Babel extension.
+"""
 from flask_babel import Babel, _
 from flask import Flask, render_template, request, flash
 
