@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Module for trying out Babel i18n """
+""" Module for trying out Babel i18n and the function that marks the string that need to be translated"""
 from flask_babel import Babel, _
 from flask import Flask, render_template, request, flash
 
