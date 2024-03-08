@@ -57,3 +57,4 @@ if __name__ == "__main__":
     # Check the count after cache expiration
     count_after_expiration = int(r.get(f"count:{url}") or 0)
     print(count_after_expiration)  # Expected output: 0
+
