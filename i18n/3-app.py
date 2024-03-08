@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-""" Module for trying out Babel i18n """
+"""A Basic Flask app with internationalization support.
+"""
 from flask_babel import Babel, _
 from flask import Flask, render_template, request, flash
 
