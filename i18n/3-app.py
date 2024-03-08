@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """A Basic Flask app with internationalization support.
 """
-from flask_babel import Babel, _
+from flask_babel import Babel
 from flask import Flask, render_template, request, flash
 
 app = Flask(__name__, template_folder='templates')
