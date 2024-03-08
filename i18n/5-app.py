@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Module for trying out Babel i18n """
-from flask_babel import Babel, _
+from flask_babel import Babel
 from flask import Flask, render_template, request, g
 from typing import Union
 
