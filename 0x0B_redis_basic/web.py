@@ -5,7 +5,7 @@ from functools import wraps
 import redis
 import requests
 from typing import Callable
-import time  # Import the time module for tracking cache expiration
+import time
 
 r = redis.Redis()
 
@@ -16,15 +16,13 @@ def count_requests(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(url):
         """ Wrapper for decorator functionality """
-        # Get the current count
-        count = int(r.get(f"count:{url}") or 0)
-
         # Check if the cache is present
         cached_html = r.get(f"cached:{url}")
         if cached_html:
+            # If cache is present, return cached content without incrementing count
             return cached_html.decode('utf-8')
 
-        # Refresh the cache and increment the count
+        # If cache is not present, refresh the cache, increment the count, and return the content
         html = method(url)
         r.setex(f"cached:{url}", 10, html)
         r.incr(f"count:{url}")
