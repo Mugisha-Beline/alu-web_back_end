@@ -1,38 +1,44 @@
 #!/usr/bin/env python3
-'''A module with tools for request caching and tracking.
-'''
+""" Module for Implementing an expiring web cache and tracker """
+
+from functools import wraps
 import redis
 import requests
-from functools import wraps
 from typing import Callable
 
-
-redis_store = redis.Redis()
-'''The module-level Redis instance.
-'''
+r = redis.Redis()
 
 
-def data_cacher(method: Callable) -> Callable:
-    '''Caches the output of fetched data.
-    '''
+def count_requests(method: Callable) -> Callable:
+    """ Decorator for counting how many times a request has been made """
+
     @wraps(method)
-    def invoker(url) -> str:
-        '''The wrapper function for caching the output.
-        '''
-        redis_store.incr(f'count:{url}')
-        result = redis_store.get(f'result:{url}')
-        if result:
-            return result.decode('utf-8')
-        result = method(url)
-        redis_store.set(f'count:{url}', 0)
-        redis_store.setex(f'result:{url}', 10, result)
-        return result
-    return invoker
+    def wrapper(url):
+        """ Wrapper for decorator functionality """
+        # Increment the count
+        r.incr(f"count:{url}")
+
+        # Get the current count
+        count = r.get(f"count:{url}")
+
+        # Check if the cache is present
+        cached_html = r.get(f"cached:{url}")
+        if cached_html:
+            return cached_html.decode('utf-8')
+
+        # Refresh the cache and reset the count
+        html = method(url)
+        r.setex(f"cached:{url}", 10, html)
+        r.set(f"count:{url}", 0)  # Reset the count
+        return html
+
+    return wrapper
 
 
-@data_cacher
+@count_requests
 def get_page(url: str) -> str:
-    '''Returns the content of a URL after caching the request's response,
-    and tracking the request.
-    '''
-    return requests.get(url).text
+    """ Uses the requests module to obtain the HTML
+    content of a particular URL and returns it.
+    """
+    req = requests.get(url)
+    return req.text
