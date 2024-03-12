@@ -11,7 +11,16 @@ if __name__ == "__main__":
     print(f'{n_logs} logs')
 
     if n_logs == 0:
-        print("Collection 'nginx' is empty. No further statistics available.")
+        print("Methods:")
+        methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+        for method in methods:
+            print(f'\tmethod {method}: 0')
+
+        status_check = nginx_collection.count_documents(
+            {"method": "GET", "path": "/status"}
+        )
+
+        print(f'{status_check} status check')
     else:
         methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
         print('Methods:')
