@@ -3,6 +3,7 @@ module.exports = {
       browser: false,
       es6: true,
       jest: true,
+      node: true,
     },
     extends: ["airbnb-base", "plugin:jest/all"],
     globals: {
@@ -22,7 +23,7 @@ module.exports = {
     overrides: [
       {
         files: ["*.js"],
-        excludedFiles: "babel.config.js",
+        excludedFiles: ["babel.config.js"],
       },
     ],
   };
