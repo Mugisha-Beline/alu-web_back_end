@@ -1,20 +1,23 @@
-function cleanSet(set, startString) {
-  const string = [];
-
+export default function cleanSet(set, startString) {
   if (
-    typeof set !== 'object' ||
-    typeof startString !== 'string' ||
-    startString.length === 0
+    !set &&
+    !startString &&
+    !(set instanceof Set) &&
+    typeof startString !== 'string'
   ) {
     return '';
   }
 
-  for (const item of set) {
-    if (item && item.startsWith(startString)) {
-      string.push(item.slice(startString.length));
+  const parts = [];
+
+  for (const value of set.values()) {
+    if (typeof value === 'string' && value.startsWith(startString)) {
+      const valueSubStr = value.substring(startString.length);
+
+      if (valueSubStr && valueSubStr !== value) {
+        parts.push(valueSubStr);
+      }
     }
   }
-  return string.join('-');
+  return parts.join('-');
 }
-
-export default cleanSet;
