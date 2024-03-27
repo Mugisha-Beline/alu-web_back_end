@@ -10,7 +10,7 @@ function updateStudentGradeByCity(students, city, newGrades) {
 
   const studentsGraded = stCity.map((student) => {
     const gradeFilter = newGrades.filter(
-      (newGrade) => newGrade.studentId === student.id
+      (newGrade) => newGrade.studentId === student.id,
     );
 
     let grade;
@@ -18,7 +18,7 @@ function updateStudentGradeByCity(students, city, newGrades) {
     if (gradeFilter[0]) {
       grade = gradeFilter[0].grade;
     } else {
-      grade = "N/A";
+      grade = 'N/A';
     }
 
     return {
