@@ -1,49 +1,25 @@
-import readDatabase from '../utils';
+import app from '../full_server/server.js';
+import { use, request, expect } from 'chai';
+import chaiHttp from 'chai-http';
+process.argv[2] = './database.csv';
 
-class StudentsController {
-  static getAllStudents(request, response, DATABASE) {
-    readDatabase(DATABASE)
-      .then((fields) => {
-        const students = [];
-        // let count = 0;
-        let msg;
+use(chaiHttp);
 
-        // for (const key of Object.keys(fields)) {
-        //   count += fields[key].length;
-        // }
-
-        // students.push(`Number of students: ${count}`);
-        students.push('This is the list of our students');
-
-        for (const key of Object.keys(fields)) {
-          msg = `Number of students in ${key}: ${
-            fields[key].length
-          }. List: ${fields[key].join(', ')}`;
-
-          students.push(msg);
+describe('Server!', () => {
+  it('welcomes user to the api', (done) => {
+    request(app)
+      .get('/students/CS')
+      .end((err, res) => {
+        if (err) {
+          done(err);
+          return;
         }
-        response.send(200, `${students.join('\n')}`);
-      })
-      .catch(() => {
-        response.send(500, 'Cannot load the database');
+        expect(res).to.have.status(200);
+        // Update the expected response based on the actual data from your database
+        const expectedResponse =
+          'List: Johann, Guillaume, Arielle, Jonathan, Emmanuel, Katie';
+        expect(res.text).to.equals(expectedResponse);
+        done();
       });
-  }
-
-  static getAllStudentsByMajor(request, response, DATABASE) {
-    const { major } = request.params;
-
-    if (major !== 'CS' && major !== 'SWE') {
-      response.send(500, 'Major parameter must be CS or SWE');
-    } else {
-      readDatabase(DATABASE)
-        .then((fields) => {
-          const students = fields[major];
-
-          response.send(200, `List: ${students.join(', ')}`);
-        })
-        .catch(() => response.send(500, 'Cannot load the database'));
-    }
-  }
-}
-
-export default StudentsController;
+  });
+});

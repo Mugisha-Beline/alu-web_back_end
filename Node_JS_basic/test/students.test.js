@@ -5,6 +5,11 @@ process.argv[2] = './database.csv';
 
 use(chaiHttp);
 
+// Add console.log statements to debug file paths
+console.log(require.resolve('../full_server/server.js'));
+console.log(require.resolve('../full_server/controllers/StudentsController.js'));
+console.log(require.resolve('../full_server/routes/index.js'));
+
 describe('Server!', () => {
   it('welcomes user to the api', (done) => {
     request(app)
