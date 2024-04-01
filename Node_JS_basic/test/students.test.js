@@ -10,10 +10,15 @@ describe('Server!', () => {
     request(app)
       .get('/students/CS')
       .end((err, res) => {
+        if (err) {
+          done(err);
+          return;
+        }
         expect(res).to.have.status(200);
-        expect(res.text).to.equals(
-          'List: Johann, Arielle, Jonathan, Emmanuel, Guillaume, Katie'
-        );
+        // Update the expected response based on the actual data from your database
+        const expectedResponse =
+          'List: Johann, Arielle, Jonathan, Emmanuel, Guillaume, Katie';
+        expect(res.text).to.equals(expectedResponse);
         done();
       });
   });
